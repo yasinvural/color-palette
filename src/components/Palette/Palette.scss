@@ -28,6 +28,8 @@
     .copied {
       opacity: 0;
       text-align: center;
+      position: relative;
+      top: -10px;
     }
   }
 
@@ -74,4 +76,12 @@
     opacity: 0;
     transform:scale(1.2);
   }
+}
+
+.whiteFontColor {
+  color: white;
+}
+
+.blackFontColor {
+  color: black;
 }
