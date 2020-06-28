@@ -7,13 +7,19 @@ const PaletteList = () => {
     Array(15).fill(Array(4).fill(""))
   );
   useEffect(() => {
-    const newPaletteList = paletteList.map((palette) => {
-      return palette.map((item) => {
-        return generateColor();
+    const paletteListFromStorage = JSON.parse(localStorage.getItem('paletteList'));
+    
+    if(!paletteListFromStorage){
+      const newPaletteList = paletteList.map((palette) => {
+        return palette.map((item) => {
+          return generateColor();
+        });
       });
-    });
-
-    setPaletteList(newPaletteList);
+      setPaletteList(newPaletteList);
+      localStorage.setItem('paletteList',JSON.stringify(newPaletteList));  
+    }else{
+      setPaletteList(paletteListFromStorage);
+    }
   }, []);
 
   const generateColor = () => {
