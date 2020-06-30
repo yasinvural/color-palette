@@ -1,25 +1,29 @@
 import React from "react";
 import "./Palette.scss";
 
-const Palette = ({ palette }) => {
+const Palette = ({ handleDetailClick, palette }) => {
+  const uuid = Object.keys(palette)[0];
+  const paletteList = Object.values(palette)[0];
+
   const renderPalette = () => {
     const tempPalette = [];
-    palette.map((p, i) => {
-      const bgStyle = {
-        backgroundColor: p,
-      };
-      tempPalette.push(
-        <div
-          className="palette"
-          key={i}
-          style={bgStyle}
-          onClick={(e) => copyClipboard(e, p)}
-        >
-          <div className="code">{p}</div>
-          <div className="copied">Copied!</div>
-        </div>
-      );
-    });
+    paletteList &&
+      paletteList.map((p, i) => {
+        const bgStyle = {
+          backgroundColor: p,
+        };
+        tempPalette.push(
+          <div
+            className="palette"
+            key={i}
+            style={bgStyle}
+            onClick={(e) => copyClipboard(e, p)}
+          >
+            <div className="code">{p}</div>
+            <div className="copied">Copied!</div>
+          </div>
+        );
+      });
     return tempPalette;
   };
 
@@ -68,7 +72,9 @@ const Palette = ({ palette }) => {
   return (
     <div className="palette-container">
       {renderPalette()}
-      <div className="details-button">Details</div>
+      <div className="details-button" onClick={() => handleDetailClick(uuid)}>
+        Details
+      </div>
     </div>
   );
 };
