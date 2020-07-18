@@ -7,9 +7,9 @@ const PaletteDetail = (props) => {
   const [colorPalette, setColorPalette] = useState([]);
   const { uuid } = props.match.params;
   useEffect(() => {
-    const palette = paletteList.find(palette=>{
+    const palette = paletteList.find((palette) => {
       const paletteId = Object.keys(palette)[0];
-      if(paletteId === uuid){
+      if (paletteId === uuid) {
         return palette;
       }
     });
@@ -19,21 +19,37 @@ const PaletteDetail = (props) => {
 
   const renderColorPalette = () => {
     const tempPaletteList = [];
-    colorPalette.forEach((palette,index)=>{
+    colorPalette.forEach((palette, index) => {
       const bgStyle = {
         backgroundColor: palette,
       };
-      tempPaletteList.push(<div className="palette" key={index} style={bgStyle}></div>)
-    })
+      tempPaletteList.push(
+        <div className="palette" key={index} style={bgStyle}>
+          <div className="wrapper">
+            <div className="menu">
+              <ul className="menu__list">
+                <li className="menu__list__item">
+                  <div>Remove</div>
+                </li>
+                <li className="menu__list__item">
+                  <div>Copy</div>
+                </li>
+              </ul>
+            </div>
+            <div className="button">
+              <span className="button__line"></span>
+              <span className="button__line"></span>
+              <span className="button__line"></span>
+            </div>
+          </div>
+        </div>
+      );
+    });
 
     return tempPaletteList;
   };
 
-  return (
-    <div className="palette-detail-container">
-      {renderColorPalette()}
-    </div>
-  )
+  return <div className="palette-detail-container">{renderColorPalette()}</div>;
 };
 
 export default PaletteDetail;
