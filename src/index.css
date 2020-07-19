@@ -17,3 +17,10 @@ code {
 .App{
   padding: 1rem;
 }
+.whiteFontColor {
+  color: white;
+}
+
+.blackFontColor {
+  color: black;
+}

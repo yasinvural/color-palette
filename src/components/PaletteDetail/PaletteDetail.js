@@ -17,7 +17,24 @@ const PaletteDetail = (props) => {
     setColorPalette(paletteArr);
   }, [uuid]);
 
+  const copyClipboard = (e, code) => {
+    const textField = document.createElement("textarea");
+    textField.innerText = code;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+  };
+
+  const removeFromPalette = (code) => {
+    const newColorPalette = [...colorPalette];
+    const index = newColorPalette.findIndex((c) => c === code);
+    newColorPalette.splice(index, 1);
+    setColorPalette(newColorPalette);
+  };
+
   const renderColorPalette = () => {
+    console.log("render palette");
     const tempPaletteList = [];
     colorPalette.forEach((palette, index) => {
       const bgStyle = {
@@ -29,10 +46,10 @@ const PaletteDetail = (props) => {
             <div className="menu">
               <ul className="menu__list">
                 <li className="menu__list__item">
-                  <div>Remove</div>
+                  <div onClick={() => removeFromPalette(palette)}>Remove</div>
                 </li>
                 <li className="menu__list__item">
-                  <div>Copy</div>
+                  <div onClick={(e) => copyClipboard(e, palette)}>Copy</div>
                 </li>
               </ul>
             </div>
