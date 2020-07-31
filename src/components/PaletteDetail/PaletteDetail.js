@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./PaletteDetail.scss";
-import { v4 as uuidv4 } from "uuid";
 
 const PaletteDetail = (props) => {
   const paletteList = JSON.parse(localStorage.paletteList);
@@ -17,7 +16,7 @@ const PaletteDetail = (props) => {
     setColorPalette(paletteArr);
   }, [uuid]);
 
-  const copyClipboard = (e, code) => {
+  const copyClipboard = (code) => {
     const textField = document.createElement("textarea");
     textField.innerText = code;
     document.body.appendChild(textField);
@@ -31,10 +30,22 @@ const PaletteDetail = (props) => {
     const index = newColorPalette.findIndex((c) => c === code);
     newColorPalette.splice(index, 1);
     setColorPalette(newColorPalette);
+    updateLocalStorage(newColorPalette);
+  };
+
+  const updateLocalStorage = (newColorPalette) => {
+    const updatedPaletteList = paletteList.map((palette, index) => {
+      if (Object.keys(palette)[0] === uuid) {
+        palette[uuid] = newColorPalette;
+        return palette;
+      }
+      return palette;
+    });
+
+    localStorage.setItem("paletteList", JSON.stringify(updatedPaletteList));
   };
 
   const renderColorPalette = () => {
-    console.log("render palette");
     const tempPaletteList = [];
     colorPalette.forEach((palette, index) => {
       const bgStyle = {
@@ -49,7 +60,7 @@ const PaletteDetail = (props) => {
                   <div onClick={() => removeFromPalette(palette)}>Remove</div>
                 </li>
                 <li className="menu__list__item">
-                  <div onClick={(e) => copyClipboard(e, palette)}>Copy</div>
+                  <div onClick={() => copyClipboard(palette)}>Copy</div>
                 </li>
               </ul>
             </div>
