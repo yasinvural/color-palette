@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./PaletteList.css";
 import Palette from "../Palette/Palette";
+import { generateColor } from "../../helper/index";
 import { v4 as uuidv4 } from "uuid";
 
 const PaletteList = (props) => {
@@ -28,14 +29,6 @@ const PaletteList = (props) => {
       setPaletteList(paletteListFromStorage);
     }
   }, []);
-
-  const generateColor = () => {
-    return (
-      "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
-    );
-    /*return (function(m,s,c){return (c ? arguments.callee(m,s,c-1) : '#') +
-          s[m.floor(m.random() * s.length)]})(Math,'0123456789ABCDEF',5);*/
-  };
 
   const handleDetailClick = (uuid) => {
     props.history.push(`/${uuid}`);

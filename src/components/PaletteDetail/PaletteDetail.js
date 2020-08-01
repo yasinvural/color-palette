@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { generateColor, copyClipboard } from "../../helper/index";
 import "./PaletteDetail.scss";
 
 const PaletteDetail = (props) => {
@@ -16,19 +17,17 @@ const PaletteDetail = (props) => {
     setColorPalette(paletteArr);
   }, [uuid]);
 
-  const copyClipboard = (code) => {
-    const textField = document.createElement("textarea");
-    textField.innerText = code;
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand("copy");
-    textField.remove();
-  };
-
   const removeFromPalette = (code) => {
     const newColorPalette = [...colorPalette];
     const index = newColorPalette.findIndex((c) => c === code);
     newColorPalette.splice(index, 1);
+    setColorPalette(newColorPalette);
+    updateLocalStorage(newColorPalette);
+  };
+
+  const createNewColor = () => {
+    const newColor = generateColor();
+    const newColorPalette = [...colorPalette, newColor];
     setColorPalette(newColorPalette);
     updateLocalStorage(newColorPalette);
   };
@@ -56,9 +55,17 @@ const PaletteDetail = (props) => {
           <div className="wrapper">
             <div className="menu">
               <ul className="menu__list">
-                <li className="menu__list__item">
-                  <div onClick={() => removeFromPalette(palette)}>Remove</div>
-                </li>
+                {colorPalette.length !== 4 && (
+                  <li className="menu__list__item">
+                    <div onClick={createNewColor}>Create</div>
+                  </li>
+                )}
+                {colorPalette.length > 2 && (
+                  <li className="menu__list__item">
+                    <div onClick={() => removeFromPalette(palette)}>Remove</div>
+                  </li>
+                )}
+
                 <li className="menu__list__item">
                   <div onClick={() => copyClipboard(palette)}>Copy</div>
                 </li>
