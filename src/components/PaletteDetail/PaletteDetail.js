@@ -53,28 +53,23 @@ const PaletteDetail = (props) => {
       tempPaletteList.push(
         <div className="palette" key={index} style={bgStyle}>
           <div className="wrapper">
-            <div className="menu">
-              <ul className="menu__list">
-                {colorPalette.length !== 4 && (
-                  <li className="menu__list__item">
-                    <div onClick={createNewColor}>Create</div>
-                  </li>
-                )}
-                {colorPalette.length > 2 && (
-                  <li className="menu__list__item">
-                    <div onClick={() => removeFromPalette(palette)}>Remove</div>
-                  </li>
-                )}
-
-                <li className="menu__list__item">
-                  <div onClick={() => copyClipboard(palette)}>Copy</div>
-                </li>
-              </ul>
-            </div>
             <div className="button">
               <span className="button__line"></span>
               <span className="button__line"></span>
               <span className="button__line"></span>
+            </div>
+            {colorPalette.length !== 4 && (
+              <div className="item" onClick={createNewColor}>
+                Create
+              </div>
+            )}
+            {colorPalette.length > 2 && (
+              <div className="item" onClick={() => removeFromPalette(palette)}>
+                Remove
+              </div>
+            )}
+            <div className="item" onClick={() => copyClipboard(palette)}>
+              Copy
             </div>
           </div>
         </div>

@@ -18,9 +18,6 @@
   }
 }
 
-$delay: 0.5s;
-$menu-items: 3;
-
 .wrapper {
   position: relative;
   width: 50px;
@@ -50,51 +47,42 @@ $menu-items: 3;
     }
   }
 
-  .menu {
+  .item {
     width: 100%;
-    .menu__list {
-      text-align: center;
-      width: 100%;
-      padding-left: 0;
-      .menu__list__item {
-        position: relative;
-        list-style: none;
-        padding-bottom: 15px;
-        top: 0px;
-        opacity: 0;
-      }
-    }
+    position: relative;
+    top: 0;
+    margin: 10px 0;
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
   }
 }
 
-.wrapper:hover {
-  .menu {
-    .menu__list {
-      .menu__list__item {
-        animation: drop 1s;
-        animation-fill-mode: forwards;
-        opacity: 1;
-
-        @for $i from 2 through $menu-items {
-          &:nth-child(#{$i}) {
-            animation-delay: $delay * ($i - 1);
-          }
-        }
-      }
-    }
-  }
+.wrapper:hover .item {
+  top: 50px;
+  opacity: 1;
+  transform-origin: top;
+  animation: mySwing 1s ease-in-out;
+  animation-fill-mode: forwards;
 }
 
-@keyframes drop {
-  from {
-    top: 0px;
+@keyframes mySwing {
+  0% {
+    transform: rotateX(-50deg);
   }
-  70% {
-    top: 65px;
-    animation-timing-function: ease-in;
+  20% {
+    transform: rotateX(50deg);
   }
-  to {
-    top: 50px;
-    animation-timing-function: ease-out;
+  40% {
+    transform: rotateX(-30deg);
+  }
+  60% {
+    transform: rotateX(30deg);
+  }
+  80% {
+    transform: rotateX(-30deg);
+  }
+  100% {
+    transform: rotateX(0deg);
   }
 }
